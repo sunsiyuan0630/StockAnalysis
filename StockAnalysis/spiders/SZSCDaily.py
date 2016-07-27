@@ -12,14 +12,13 @@ import demjson
 
 # 用来爬上证深成两市每日详细情况
 class StockDailySpider(scrapy.Spider):
-    name = "StockDaily"
+    name = "SZSCDaily"
     allowed_domains = ["xueqiu.com"]
     start_urls = (
         'https://xueqiu.com',
     )
 
     def parse(self, response):
-        print type(response.headers.getlist('Set-Cookie'))
         cookieSet = response.headers.getlist('Set-Cookie')
         s = cookieSet[0].split(';')[0].split('=')[1]
         xq_a_token = cookieSet[1].split(';')[0].split('=')[1]
