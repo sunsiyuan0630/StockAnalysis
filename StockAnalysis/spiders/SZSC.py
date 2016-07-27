@@ -5,7 +5,7 @@ from scrapy.selector import Selector
 from scrapy.http import Request
 from bs4 import BeautifulSoup
 from StockAnalysis.items import SZItem, SCItem
-from  datetime import *
+from datetime import *
 
 
 # 用来爬上证深成两市所有股票，制成字典表
@@ -18,11 +18,13 @@ class SZSCSpider(scrapy.Spider):
 
     def parse(self, response):
         sel = response.xpath('//div[@id="quotesearch"]').extract()[0].strip()
-        soup = BeautifulSoup(sel)
+        soup = BeautifulSoup(sel,'lxml')
+        print soup.prettify()
         szsiblings = soup.select('ul')[0].select('a')
         i = 0
         for sibling in szsiblings:
             mystr = sibling.string
+            print mystr
             tmpstr = mystr.replace('(', ' ').replace(')', '')
             tmpArr = tmpstr.split(' ', 1)
             name = tmpArr[0].encode("utf-8")
@@ -39,6 +41,7 @@ class SZSCSpider(scrapy.Spider):
         j = 0
         for sibling in scsiblings:
             mystr = sibling.string
+            print mystr
             tmpstr = mystr.replace('(', ' ').replace(')', '')
             tmpArr = tmpstr.split(' ', 1)
             name = tmpArr[0].encode("utf-8")

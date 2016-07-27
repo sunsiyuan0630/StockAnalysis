@@ -13,7 +13,9 @@ BOT_NAME = 'StockAnalysis'
 
 SPIDER_MODULES = ['StockAnalysis.spiders']
 NEWSPIDER_MODULE = 'StockAnalysis.spiders'
-
+DOWNLOADER_MIDDLEWARES = {
+    "StockAnalysis.middleware.UserAgentMiddleware": 401
+}
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'StockAnalysis (+http://www.yourdomain.com)'

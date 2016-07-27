@@ -23,14 +23,19 @@ class SCItem(scrapy.Item):
     lastUpdate = Field()
 
 
-class SZSCDailyDetail(scrapy.Item):
+class SZSCDailyDetailItem(scrapy.Item):
     _id = Field()
     ct = Field()  # 创建时间
     lt = Field()  # 记录时间
     zdz = Field()  # 涨跌值
     zdf = Field()  # 涨跌幅
-    ss = Field()  # 上深  1表示上证  0表示深成
+    ss = Field()  # 上深  0表示上证  1表示深成
     zs = Field()  # 指数
+    op = Field()  #开盘
+    h = Field()   #最高
+    l = Field()   #最低
+    h52 = Field()   #52周最高
+    l52 = Field()   #52周最低
 
 
 class StockDailyDetailItem(scrapy.Item):

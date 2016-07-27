@@ -5,7 +5,8 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import pymongo
-from items import SZItem,SCItem
+from items import SZItem, SCItem, SZSCDailyDetailItem
+
 
 class StockanalysisPipeline(object):
     def __init__(self):
@@ -13,6 +14,7 @@ class StockanalysisPipeline(object):
         db = clinet["Stock"]
         self.SZItem = db["SZ"]
         self.SCItem = db["SC"]
+        self.SZSCDailyDetailItem = db['SZSCDaily']
 
     def process_item(self, item, spider):
         if isinstance(item, SZItem):
@@ -20,9 +22,14 @@ class StockanalysisPipeline(object):
                 self.SZItem.insert(dict(item))
             except Exception:
                 pass
-        if isinstance(item, SCItem):
+        elif isinstance(item, SCItem):
             try:
                 self.SCItem.insert(dict(item))
+            except Exception:
+                pass
+        elif isinstance(item, SZSCDailyDetailItem):
+            try:
+                self.SZSCDailyDetailItem.insert(dict(item))
             except Exception:
                 pass
         return item
