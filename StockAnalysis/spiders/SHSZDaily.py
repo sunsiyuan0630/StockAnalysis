@@ -4,14 +4,14 @@ import string
 from scrapy.selector import Selector
 from scrapy.http import Request
 from bs4 import BeautifulSoup
-from StockAnalysis.items import SZItem, SCItem, StockDailyDetailItem, SZSCDailyDetailItem
+from StockAnalysis.items import SHSZDailyDetailItem
 from  datetime import *
 from dateutil import parser
 import demjson
 
 
 # 用来爬上证深成两市每日详细情况
-class StockDailySpider(scrapy.Spider):
+class SZSCDailySpider(scrapy.Spider):
     name = "SZSCDaily"
     allowed_domains = ["xueqiu.com"]
     start_urls = (
@@ -31,7 +31,7 @@ class StockDailySpider(scrapy.Spider):
         jsonObj = demjson.decode(response.body)
         sz = jsonObj['SH000001']
         sc = jsonObj['SZ399001']
-        szDaily = SZSCDailyDetailItem()
+        szDaily = SHSZDailyDetailItem()
         szDaily['ct'] = datetime.now()
         szDaily['lt'] = parser.parse(sz['time'])
         szDaily['zdz'] = sz['change']
@@ -44,7 +44,7 @@ class StockDailySpider(scrapy.Spider):
         szDaily['h52'] = sz['high52week']
         szDaily['l52'] = sz['low52week']
         print szDaily
-        scDaily = SZSCDailyDetailItem()
+        scDaily = SHSZDailyDetailItem()
         scDaily['ct'] = datetime.now()
         scDaily['lt'] = parser.parse(sc['time'])
         scDaily['zdz'] = sc['change']

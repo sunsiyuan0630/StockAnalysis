@@ -9,6 +9,13 @@ import scrapy
 from scrapy import Item, Field
 
 
+class SHItem(scrapy.Item):
+    _id = Field()
+    code = Field()
+    name = Field()
+    lastUpdate = Field()
+
+
 class SZItem(scrapy.Item):
     _id = Field()
     code = Field()
@@ -16,14 +23,7 @@ class SZItem(scrapy.Item):
     lastUpdate = Field()
 
 
-class SCItem(scrapy.Item):
-    _id = Field()
-    code = Field()
-    name = Field()
-    lastUpdate = Field()
-
-
-class SZSCDailyDetailItem(scrapy.Item):
+class SHSZDailyDetailItem(scrapy.Item):
     _id = Field()
     ct = Field()  # 创建时间
     lt = Field()  # 记录时间
@@ -64,23 +64,28 @@ class StockDailyDetailItem(scrapy.Item):
     sxl = Field()  # 市销率
 
 
-class Person(scrapy.Item):
+class PersonItem(scrapy.Item):
     _id = Field()
     g = Field()  # 性别
-    l = Field()  # location
+    pv = Field()  # location
+    ct = Field()    #城市/地区
     v = Field()  # 是否实名认证
     fc = Field()  # 关注股票数
     dc = Field()  # 参与讨论次数
     fans = Field()  # 粉丝数
+    fc = Field()    #朋友数
     cc = Field()  # 圈子
     sn = Field()  # 个人签名
 
 
-class CommentDailyDetail(scrapy.Item):
+class CommentItem(scrapy.Item):
+    _id = Field()   #commentId
     stockCode = Field()  # 股票编码
-    ct = Field()  # 创建时间
-    lt = Field()  # 记录时间
     pd = Field()  # Person Id
+    ct = Field()  # 创建时间(该评论被用户创建的时间)
+    le = Field()  #最后编辑时间
+    lt = Field()  # 记录时间（爬取时间）
+    tt = Field()    #title
     c = Field()  # 评论内容
     f = Field()  # 转发次数
     k = Field()  # 收藏次数
